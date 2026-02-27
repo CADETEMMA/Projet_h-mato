@@ -1,0 +1,137 @@
+Prédiction de la survie globale chez des patients atteints de leucémie myéloïde aiguë (AML)
+
+Objectif
+Ce projet vise à appliquer des méthodes de data science en santé pour analyser et prédire la survie globale de patients atteints de leucémie myéloïde aiguë (AML) à partir de données cliniques issues du TCGA.
+
+Structure du projet
+01_EDA.ipynb                 # Analyse exploratoire des données
+02_Preprocessing.ipynb       # Prétraitement & pipeline scikit-learn
+03_ML_Models.ipynb        # Entraînement & comparaison des modèles
+04_Evaluation.ipynb          # Évaluation détaillée du meilleur modèle
+05_Interpretability.ipynb # Interprétabilité du modèle avec SHAP
+fichier data/processed/
+  preprocessor.pkl
+  best_model.pkl
+README
+
+Données
+Source : Données cliniques Acute Myeloid Leukemia (TCGA, GDC, 2025) su le site cBioPortal
+Taille : ~200 patients
+
+Variables :
+Démographiques (âge, sexe)
+Cliniques (statut vital, antécédents, traitements)
+Biologiques (fraction du génome altérée, etc.)
+
+Variable cible :
+Patient's Vital Status (Alive = 0, Dead = 1)
+
+01 – Analyse exploratoire (EDA)
+
+Objectifs :
+Comprendre la structure des données
+Identifier les valeurs manquantes
+Étudier les distributions et corrélations
+Nettoyer le dataset
+
+Méthodes :
+Analyse des valeurs manquantes
+Visualisations (histogrammes, boxplots, heatmap de corrélations)
+Suppression des variables non pertinentes
+Gestion des outliers (méthode IQR)
+
+Résultat :
+Création d’un dataset nettoyé df_clean.csv, prêt pour la modélisation.
+
+02 – Prétraitement & Pipeline ML
+Objectifs :
+Préparer les données pour le machine learning
+Eviter toute fuite d’information (data leakage)
+
+Méthodes :
+Split train/test stratifié
+Pipeline scikit-learn :
+Numérique : imputation médiane + standardisation
+Catégoriel : imputation + one-hot encoding
+Sauvegarde du preprocessor (preprocessor.pkl)
+
+Résultat :
+Pipeline reproductible prêt à être utilisé pour tous les modèles.
+
+03 – Modélisation prédictive
+Objectifs :
+Comparer plusieurs modèles de classification pour prédire la survie.
+
+Modèles testés :
+Logistic Regression 
+Random Forest
+XGBoost
+
+Métriques :
+AUC
+Precision
+Recall
+F1-score
+
+Résultat :
+Meilleure AUC : XGBoost
+Sauvegarde du pipeline complet : best_model.pkl
+
+04 – Évaluation du meilleur modèle
+Objectifs :
+Évaluer finement les performances du modèle retenu.
+
+Analyses réalisées :
+Matrice de confusion
+Courbe ROC + AUC
+Courbe Precision-Recall
+Precision, Recall, F1-score
+
+Résultats clés :
+AUC ≈ 0.738
+Precision ≈ 0.778
+Recall ≈ 0.840
+
+Le modèle est performant pour détecter les patients à risque de décès, avec un bon compromis précision/rappel.
+
+05 – Interprétabilité (SHAP)
+Objectifs :
+Rendre le modèle interprétable et compréhensible dans un contexte clinique.
+
+Méthodes :
+SHAP 
+Importance globale des features
+Analyse des variables influentes
+
+Résultat :
+Identification des variables les plus contributives dans la prédiction de la survie, favorisant la transparence du modèle et son acceptabilité en contexte médical.
+
+=> Compétences démontrées
+Data science en santé
+Prétraitement de données cliniques
+Pipelines scikit-learn
+Modélisation supervisée
+Évaluation robuste de modèles
+Interprétabilité des modèles (SHAP)
+Bonnes pratiques ML (data leakage, reproductibilité)
+
+=> Comment exécuter le projet
+Cloner le repo
+git clone https://github.com/CADETEMMA/Projet_h-mato.git
+cd Projet_h-mato
+
+Installer les dépendances
+pip install -r requirements.txt
+
+Lancer les notebooks dans l’ordre :
+01_EDA.ipynb  
+02_Preprocessing.ipynb  
+03_ML_Modelsn.ipynb  
+04_Evaluation.ipynb  
+05_Interpretability.ipynb  
+
+Pistes d’amélioration
+Ajouter une analyse de survie (Kaplan-Meier, Cox)
+
+Auteur : 
+Projet réalisé par Emma CADET
